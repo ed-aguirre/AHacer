@@ -3,12 +3,19 @@
     <ion-buttons slot="start">
     <ion-back-button
         color="tertiary"
-        defaultHref="/"
+        defaultHref="/tabs/tab2"
         text=""
       ></ion-back-button
       >
     </ion-buttons>
     <ion-title>{{ lista.titulo }}</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="setFocusInput()">
+        <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
 
@@ -17,7 +24,12 @@
   <ion-list color="dark">
     <ion-item color="dark">
       <ion-label position="floating">Nuevo elemento</ion-label>
-      <ion-input type="text" [(ngModel)]="nombreItem" (keyup.enter)="agregarItem()"></ion-input>
+      <ion-input 
+      #newElement
+      [(disabled)]='bandera' 
+      type="text" 
+      [(ngModel)]="nombreItem" 
+      (keyup.enter)="agregarItem()"></ion-input>
     </ion-item>
   </ion-list>
 

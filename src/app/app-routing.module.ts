@@ -6,11 +6,12 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule)
   }
-  // ,
-  // {
-  //   path: 'agregar',
-  //   loadChildren: () => import('./pages/agregar/agregar.module').then( m => m.AgregarPageModule)
-  // }
+   ,
+   //se descomentó el siguiente path
+   {
+     path: 'agregar',
+     loadChildren: () => import('./pages/agregar/agregar.module').then( m => m.AgregarPageModule)
+   }
 ];
 @NgModule({
   imports: [

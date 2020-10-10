@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { DeseosService } from '../../services/deseos.service';
 import { ActivatedRoute } from '@angular/router';
 import { Lista } from '../../models/lista.model';
 import { ListaItem } from '../../models/lista-item.model';
-import { AlertController } from '@ionic/angular';
+import { AlertController, IonInput } from '@ionic/angular';
+import { Console } from 'console';
 
 @Component({
   selector: 'app-agregar',
@@ -11,14 +12,18 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./agregar.page.scss'],
 })
 export class AgregarPage implements OnInit {
+  @ViewChild('newElement',{static:false}) entrada: IonInput;
+  
   lista: Lista;
   nombreItem: string;
+  bandera: boolean;
   constructor(private deseosServices: DeseosService,
               private router: ActivatedRoute,
               private alertController: AlertController
     ) {
     const listaId = this.router.snapshot.paramMap.get('listaId');
     this.lista = this.deseosServices.ObtenerLista(listaId);
+    this.bandera = true;// set true a bandera para hacer disabled el input
    }
 
   ngOnInit() {
@@ -31,7 +36,14 @@ export class AgregarPage implements OnInit {
     this.lista.item.push(nuevoItem);
     this.nombreItem = '';
     this.deseosServices.guardarStorage();
+    //al terminar de guardar, llama a la funcion setblur
+    this.setBlur();
   }
+
+  setBlur(){//funcion que cambia el estado de bandera a true
+    this.bandera = true;
+  }
+
   cambiocheck(tarea: ListaItem) {
     const pendientes  = this.lista.item.filter(item => item.completado === false).length;
     if ( pendientes === 0) {
@@ -81,6 +93,15 @@ export class AgregarPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  setFocusInput(){
+    this.bandera = false;
+    //por alguna razon tengo que esperar para poder hacer focus
+    setTimeout(() => {
+      this.entrada.setFocus();  
+    }, 10);
+    
   }
 
 }

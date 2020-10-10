@@ -3,12 +3,13 @@
   <ion-item-sliding *ngFor = "let lista of deseosSevices.listas | filtroLista : tipo" color="dark">
     <ion-item detail color="dark" (click)="listaSeleccionada(lista)">
       <ion-label>{{ lista.titulo }}</ion-label>
-      <ion-note color="tertiary" slot="end"> {{ lista.item.length }} tareas</ion-note>
+      <!-- se agrego un ion badge para accesibilidad -->
+      <ion-badge color="tertiary" slot="end"> {{ lista.item.length }} tareas </ion-badge>
     </ion-item>
 
     <ion-item-options side="end">
       <ion-item-option color="danger" (click)="borrarLista(lista)">
-        <ion-icon name="close" ></ion-icon>
+        Eliminar
       </ion-item-option>
     </ion-item-options>
 
